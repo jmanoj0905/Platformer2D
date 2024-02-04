@@ -1,0 +1,4 @@
+repository "Platformer2D@HalfBakedCake@cloud"
+  path "/"
+    br "/main"
+    co "/main"
