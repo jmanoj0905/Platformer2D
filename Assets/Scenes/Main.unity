@@ -602,26 +602,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 610438237}
     m_Modifications:
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.b
-      value: 0.5943396
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.g
-      value: 0.38660932
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_SortingOrder
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3233454723631755386, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: jumpBoostVal
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 6318183840758689384, guid: 81dd3f6b4fe3c9c45a5b453b16459677, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -669,6 +649,26 @@ PrefabInstance:
     - target: {fileID: 6730275056880451048, guid: 81dd3f6b4fe3c9c45a5b453b16459677, type: 3}
       propertyPath: m_Name
       value: BouncyPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.38660932
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3233454723631755386, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: jumpBoostVal
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1092,7 +1092,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.7, y: 0.71, z: -10}
+  m_LocalPosition: {x: -0.049999237, y: 0.71, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2262,26 +2262,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 610438237}
     m_Modifications:
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.b
-      value: 0.5943396
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.g
-      value: 0.38660932
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_SortingOrder
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3233454723631755386, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: jumpBoostVal
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 6318183840758689384, guid: 81dd3f6b4fe3c9c45a5b453b16459677, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2329,6 +2309,26 @@ PrefabInstance:
     - target: {fileID: 6730275056880451048, guid: 81dd3f6b4fe3c9c45a5b453b16459677, type: 3}
       propertyPath: m_Name
       value: BouncyPlatform (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.38660932
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3233454723631755386, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: jumpBoostVal
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2787,7 +2787,7 @@ Transform:
   m_GameObject: {fileID: 893406252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.7, y: 0.71, z: -10}
+  m_LocalPosition: {x: -0.049999237, y: 0.71, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3149,26 +3149,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 610438237}
     m_Modifications:
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.b
-      value: 0.5943396
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.g
-      value: 0.38660932
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: m_SortingOrder
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3233454723631755386, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
-      propertyPath: jumpBoostVal
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 6318183840758689384, guid: 81dd3f6b4fe3c9c45a5b453b16459677, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -3216,6 +3196,26 @@ PrefabInstance:
     - target: {fileID: 6730275056880451048, guid: 81dd3f6b4fe3c9c45a5b453b16459677, type: 3}
       propertyPath: m_Name
       value: BouncyPlatform (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.38660932
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675636333617985384, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: m_SortingOrder
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3233454723631755386, guid: 8cb999dd21346184088854cef59d80d5, type: 3}
+      propertyPath: jumpBoostVal
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5524,7 +5524,7 @@ Transform:
   m_GameObject: {fileID: 1691144450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.7, y: 0.71, z: 0}
+  m_LocalPosition: {x: -0.049999237, y: 0.71, z: 0}
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

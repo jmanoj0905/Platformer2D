@@ -58,12 +58,10 @@ public class PlayerMovement : MonoBehaviour
 	private bool isFacingRight = true;
 	private float horizontal;
 	private float originalSpeed;
-	private int originalJumpCount;
 
 	void Start()
 	{
 		originalSpeed = speed;
-		originalJumpCount = maxDoubleJumps;
 	}
 	public void Update()
 	{
@@ -109,10 +107,6 @@ public class PlayerMovement : MonoBehaviour
 		if(!isWallJumping && !isWallSliding && !isCrouching)
 		{
 			Glide();
-		}
-		if (IsOnWall())
-		{
-			maxDoubleJumps = originalJumpCount;
 		}
 	}
 
@@ -237,6 +231,8 @@ public class PlayerMovement : MonoBehaviour
 			playerRB.velocity = new Vector2(wallJumpDir * wallJumpingPower.x, wallJumpingPower.y);
 			wallJumpCounter = 0f;
 
+			doubleJumpCount = maxDoubleJumps;
+
 			if(transform.localScale.x != wallJumpDir)
 			{
 				isFacingRight = !isFacingRight;
@@ -305,7 +301,6 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Glide()
 	{
-		Debug.Log("Glide function called");
 		if (!IsGrounded() && Input.GetKey(KeyCode.LeftShift) && canGlide && !isGliding)
 		{
 			isGliding = true;
