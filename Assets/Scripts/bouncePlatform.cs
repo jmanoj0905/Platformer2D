@@ -5,24 +5,24 @@ using UnityEngine;
 public class bouncePlatform : MonoBehaviour
 {
     private GameObject player;
-    PlayerMovement charController;
+	private Rigidbody2D playerRb;
+    //PlayerMovement charController;
+
     public float jumpBoostVal = 20f;
+	private Vector2 platformDir;
 
 	private void Start()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
-		charController = player.GetComponent<PlayerMovement>();
+		playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+		//charController = player.GetComponent<PlayerMovement>();
+		platformDir = transform.up;
 	}
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject == player)
 		{
-			float originalJumpPow = charController.jumpingPower;
-			charController.jumpingPower += jumpBoostVal;
-			charController.maxDoubleJumps += 1;
-			charController.Jump();
-			charController.jumpingPower = originalJumpPow;
-			charController.maxDoubleJumps--;
+			playerRb.AddForce(platformDir*jumpBoostVal, ForceMode2D.Impulse);
 		}
 	}
 }

@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 	public float wallJumpDuration = 0.2f;
 	public Vector2 wallJumpingPower = new Vector2(10f, 24f);
 	private bool isWallSliding;
+	public bool canWallJump = true;
 	private bool isWallJumping;
 	private float wallJumpDir;
 	private float wallJumpTime = 0.2f;
@@ -86,7 +87,11 @@ public class PlayerMovement : MonoBehaviour
 
 		HandleJumping();
 		WallSlide();
-		WallJump();
+
+		if (canWallJump)
+		{
+			WallJump();
+		}
 
 		if (!isWallJumping)
 		{
@@ -208,6 +213,25 @@ public class PlayerMovement : MonoBehaviour
 		{
 			isWallSliding = false;
 		}
+
+		///WALLCLIMB CODE ONLY TWEAK LEFT SHIFT TO GLIDE AND THE GRAVITYSCALE
+			/*if (IsOnWall() && !IsGrounded() && horizontal != 0f)
+			{
+				playerRB.gravityScale = canWallClimb ? 0f : 5f;
+				isWallSliding = true;
+
+				if (canWallClimb && Input.GetKey(KeyCode.LeftShift))
+				{
+					float verticalInput = Input.GetKey(KeyCode.W) ? 1f : Input.GetKey(KeyCode.S) ? -1f : 0f;
+					float wallYvel = Mathf.Clamp(playerRB.velocity.y, -wallSlideSpeed, wallSlideSpeed) + verticalInput * wallSlideSpeed;
+					playerRB.velocity = new Vector2(playerRB.velocity.x, wallYvel);
+				}
+			}
+			else
+			{
+				isWallSliding = false;
+				playerRB.gravityScale = 5f;
+			}*/
 	}
 
 	private void WallJump()
@@ -230,7 +254,8 @@ public class PlayerMovement : MonoBehaviour
 			isWallJumping = true;
 			playerRB.velocity = new Vector2(wallJumpDir * wallJumpingPower.x, wallJumpingPower.y);
 			wallJumpCounter = 0f;
-
+			canDash = true;
+			canDashCode = true;
 			doubleJumpCount = maxDoubleJumps;
 
 			if(transform.localScale.x != wallJumpDir)

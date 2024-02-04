@@ -5510,6 +5510,7 @@ MonoBehaviour:
   wallSlideSpeed: 3
   wallJumpDuration: 0.2
   wallJumpingPower: {x: 10, y: 24}
+  canWallJump: 1
   canDash: 1
   dashingPower: 24
   canGlide: 1
