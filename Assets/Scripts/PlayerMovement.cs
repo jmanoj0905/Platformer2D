@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Gliding")]
 	public bool canGlide = true;
 	public float linearDrag = 0f;
-	private bool isGliding = false;
+	[HideInInspector] public bool isGliding = false;
 	public float glideDrag = 10f;
 
 	private bool isFacingRight = true;
