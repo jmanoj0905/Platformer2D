@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Ground
   - Wall
-  - Upwind
+  - SouthPole
   layers:
   - Default
   - TransparentFX
