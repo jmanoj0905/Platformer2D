@@ -1092,7 +1092,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8, y: 1.5, z: -10}
+  m_LocalPosition: {x: -8.3, y: 3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2932,7 +2932,7 @@ Transform:
   m_GameObject: {fileID: 893406252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8, y: 1.5, z: -10}
+  m_LocalPosition: {x: -8.3, y: 3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5671,7 +5671,7 @@ Transform:
   m_GameObject: {fileID: 1691144450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8, y: 1.5, z: 0}
+  m_LocalPosition: {x: -8.3, y: 3.5, z: 0}
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6180,6 +6180,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 150740042335060997, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
+      propertyPath: speed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 150740042335060997, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
+      propertyPath: waypoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 150740042335060997, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
+      propertyPath: waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1511757757}
+    - target: {fileID: 150740042335060997, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
+      propertyPath: waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 904995857}
     - target: {fileID: 1086557861568614430, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
@@ -6220,18 +6236,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1287567395993180807, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
-      propertyPath: waypoints.Array.size
-      value: 2
+    - target: {fileID: 1086557861568614430, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1287567395993180807, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
-      propertyPath: waypoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 1511757757}
-    - target: {fileID: 1287567395993180807, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
-      propertyPath: waypoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 904995857}
     - target: {fileID: 1645427007325744059, guid: d35b9d0a35555284c86db6aa70ce7f4b, type: 3}
       propertyPath: m_Name
       value: MovingPlatform
