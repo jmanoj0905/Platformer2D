@@ -47,8 +47,15 @@ public class PlayerMovement : MonoBehaviour
 	private bool canDashCode;
 	public float dashingPower = 24f;
 	private bool isDashing = false;
-	private float dashingTime = 0.2f;
+	public float dashingTime = 0.2f;
 	private float dashingCooldown = 0.25f;
+	//===================================//
+	public bool canUpDash = true;
+	private bool canUpDashCode;
+	public float upDashingPower = 50f;
+	private bool isUpDashing = false;
+	public float upDashingTime = 0.5f;
+	private float upDashingCooldown = 0.25f;
 
 	[Header("Gliding")]
 	public bool canGlide = true;
@@ -64,10 +71,10 @@ public class PlayerMovement : MonoBehaviour
 	{
 		originalSpeed = speed;
 	}
+
 	public void Update()
 	{
-		//canDashCode = canDash;
-		if (isDashing == true)
+		if (isDashing == true || isUpDashing == true)
 		{
 			return; // Prevents player from moving while dashing
 		}
@@ -76,15 +83,13 @@ public class PlayerMovement : MonoBehaviour
 		{
 			canDashCode = canDash;
 		}
+		if(IsGrounded() && !isUpDashing){
+			canUpDashCode = canUpDash;
+		}
 		if (IsGrounded())
 		{
 			isGliding = false;
 		}
-
-		//HandleHorizontalMovement();
-		//Flip();
-		//Glide();
-
 		HandleJumping();
 		WallSlide();
 
@@ -104,6 +109,9 @@ public class PlayerMovement : MonoBehaviour
 		{
 			StartCoroutine(Dash());
 		}
+		if(Input.GetKeyDown(KeyCode.X) && canUpDashCode){
+			StartCoroutine(UpDash());
+		}
 
 		if (!canDoubleJump)
 		{
@@ -120,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
 		horizontal = Input.GetAxisRaw("Horizontal");
 		playerRB.velocity = new Vector2(horizontal * speed, playerRB.velocity.y);
 	}
-
+	
 	private void HandleJumping()
 	{
 		if (IsGrounded())
@@ -154,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
 			doubleJumpCount--;
 		}
 
-		if ((Input.GetButtonUp("Jump") && playerRB.velocity.y > 0f))
+		if (Input.GetButtonUp("Jump") && playerRB.velocity.y > 0f)
 		{
 			SoftLand();
 			coyoteTimeCounter = 0f;
@@ -187,6 +195,7 @@ public class PlayerMovement : MonoBehaviour
 				crouchDisableCollider.enabled = false;
 				transform.localScale = new Vector2(transform.localScale.x, 1f);
 				canDash = false;
+				canUpDash = false;
 				canDoubleJump = false;
 			}
 		}
@@ -197,6 +206,7 @@ public class PlayerMovement : MonoBehaviour
 			crouchDisableCollider.enabled = true;
 			transform.localScale = new Vector2(transform.localScale.x, 1.5f);
 			canDash = true;
+			canUpDash = true;
 			canDoubleJump = true;
 		}
 	}
@@ -321,6 +331,26 @@ public class PlayerMovement : MonoBehaviour
 		{
 			yield return new WaitForSeconds(dashingCooldown);
 			canDashCode = true;
+		}
+	}
+	private IEnumerator UpDash()
+	{
+		canUpDashCode = false;
+		isUpDashing = true;
+		float originalTRWidth = dashTrail.startWidth;
+		float originalGravity = playerRB.gravityScale;
+		playerRB.gravityScale = 0f;
+		float dir = transform.localScale.x;
+		playerRB.velocity = new Vector2(0f, transform.localScale.y * upDashingPower);
+		dashTrail.startWidth = 0.78f;
+		yield return new WaitForSeconds(upDashingTime);
+		dashTrail.startWidth = originalTRWidth;
+		playerRB.gravityScale = originalGravity;
+		isUpDashing = false;
+		if (IsGrounded() && !isUpDashing)
+		{
+			yield return new WaitForSeconds(upDashingCooldown);
+			canUpDashCode = true;
 		}
 	}
 

@@ -56,5 +56,12 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Platformer2D.sln"
+    "dotnet.defaultSolution": "Platformer2D.sln",
+    "grammarly.selectors": [
+        {
+            "language": "csharp",
+            "scheme": "file",
+            "pattern": "Assets/Scripts/moveNMorf.cs"
+        }
+    ]
 }
