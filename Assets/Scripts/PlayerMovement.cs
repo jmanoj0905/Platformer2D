@@ -20,13 +20,13 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Jumps")]
 	public float jumpingPower = 20f;
 	public float jumpBufferTime = 0.2f;
-	public float coyoteTime = 0.2f;
-	private float coyoteTimeCounter;
+	public float coyoteTime = 1f;
+	public float coyoteTimeCounter;
 	private float jumpBufferCounter;
 	private bool isJumping;
 	public bool canDoubleJump = true;
 	public int maxDoubleJumps = 1; // Adjust this as needed
-	private int doubleJumpCount; // Counter for double jumps
+	[HideInInspector]public int doubleJumpCount; // Counter for double jumps
 
 
 	[Header("Wall_Maneuver")]
@@ -44,21 +44,22 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Dashing")]
 	public bool canDash = true;
-	private bool canDashCode;
+	[HideInInspector]public bool canDashCode;
 	public float dashingPower = 24f;
 	private bool isDashing = false;
 	public float dashingTime = 0.2f;
 	private float dashingCooldown = 0.25f;
 	//===================================//
 	public bool canUpDash = true;
-	private bool canUpDashCode;
-	public float upDashingPower = 50f;
+	[HideInInspector]public bool canUpDashCode;
+	public float upDashingPower = 15f;
 	private bool isUpDashing = false;
 	public float upDashingTime = 0.5f;
-	private float upDashingCooldown = 0.25f;
+	private float upDashingCooldown = 1f;
 
 	[Header("Gliding")]
 	public bool canGlide = true;
+	private bool canGlideCode = true;
 	public float linearDrag = 0f;
 	[HideInInspector] public bool isGliding = false;
 	public float glideDrag = 10f;
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool isFacingRight = true;
 	private float horizontal;
 	private float originalSpeed;
+	private bool isGroundedVar = true;
 
 	void Start()
 	{
@@ -74,25 +76,23 @@ public class PlayerMovement : MonoBehaviour
 
 	public void Update()
 	{
-		if (isDashing == true || isUpDashing == true)
+		if (isDashing == true)
 		{
 			return; // Prevents player from moving while dashing
 		}
 
-		if (IsGrounded() && !isDashing)
-		{
-			canDashCode = canDash;
-		}
-		if(IsGrounded() && !isUpDashing){
-			canUpDashCode = canUpDash;
-		}
 		if (IsGrounded())
 		{
+			if(!isDashing)	canDashCode = canDash;
+
+			if(!isUpDashing) canUpDashCode = canUpDash;
+
+			if(!isGliding) canGlideCode = canGlide;
+
 			isGliding = false;
 		}
 		HandleJumping();
 		WallSlide();
-
 		if (canWallJump)
 		{
 			WallJump();
@@ -109,8 +109,14 @@ public class PlayerMovement : MonoBehaviour
 		{
 			StartCoroutine(Dash());
 		}
-		if(Input.GetKeyDown(KeyCode.X) && canUpDashCode){
+		
+		if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.Mouse0) && canUpDashCode && !isGliding)
+		{
 			StartCoroutine(UpDash());
+		}
+		if(IsOnWall()){ //Does't allow gliding on wall
+			isGliding = false;
+			playerRB.drag = linearDrag;
 		}
 
 		if (!canDoubleJump)
@@ -131,43 +137,48 @@ public class PlayerMovement : MonoBehaviour
 	
 	private void HandleJumping()
 	{
-		if (IsGrounded())
-		{
-			coyoteTimeCounter = coyoteTime;
-			doubleJumpCount = maxDoubleJumps; // Reset double jump count when grounded
-		}
-		else
-		{
-			coyoteTimeCounter -= Time.deltaTime;
-		}
-
-		if (Input.GetButtonDown("Jump"))
-		{
-			jumpBufferCounter = jumpBufferTime;
-		}
-		else
-		{
-			jumpBufferCounter -= Time.deltaTime;
-		}
-
-		if ((coyoteTimeCounter > 0f) && (jumpBufferCounter > 0f) && (!isJumping))
-		{
-			Jump();
-			StartCoroutine(JumpCooldown());
-		}
-		else if (Input.GetButtonDown("Jump") && doubleJumpCount > 0)
-		{
-			Jump();
-			StartCoroutine(JumpCooldown());
-			doubleJumpCount--;
-		}
-
-		if (Input.GetButtonUp("Jump") && playerRB.velocity.y > 0f)
-		{
-			SoftLand();
-			coyoteTimeCounter = 0f;
-		}
+	    if (IsGrounded())
+	    {
+	        coyoteTimeCounter = coyoteTime;
+	        doubleJumpCount = maxDoubleJumps; // Reset double jump count when grounded
+	    }
+	    else
+	    {
+	        coyoteTimeCounter -= Time.deltaTime;
+	    }
+	
+	    if (Input.GetButtonDown("Jump"))
+	    {
+	        jumpBufferCounter = jumpBufferTime;
+	    }
+	    else
+	    {
+	        jumpBufferCounter -= Time.deltaTime;
+	    }
+	
+	    if ((coyoteTimeCounter > 0f) && (jumpBufferCounter > 0f) && (!isJumping))
+	    {
+	        Jump();
+	        StartCoroutine(JumpCooldown());
+	        if (!IsGrounded()) // Increment double jump count if coyote jumping
+	        {
+	            doubleJumpCount++;
+	        }
+	    }
+	    else if (Input.GetButtonDown("Jump") && doubleJumpCount > 0)
+	    {
+	        Jump();
+	        StartCoroutine(JumpCooldown());
+	        doubleJumpCount--;
+	    }
+	
+	    if (Input.GetButtonUp("Jump") && playerRB.velocity.y > 0f)
+	    {
+	        SoftLand();
+	        coyoteTimeCounter = 0f;
+	    }
 	}
+
 
 	public void Jump()
 	{
@@ -193,7 +204,6 @@ public class PlayerMovement : MonoBehaviour
 				isCrouching = true;
 				speed = crouchSpeed;
 				crouchDisableCollider.enabled = false;
-				transform.localScale = new Vector2(transform.localScale.x, 1f);
 				canDash = false;
 				canUpDash = false;
 				canDoubleJump = false;
@@ -204,7 +214,6 @@ public class PlayerMovement : MonoBehaviour
 			isCrouching = false;
 			speed = originalSpeed;
 			crouchDisableCollider.enabled = true;
-			transform.localScale = new Vector2(transform.localScale.x, 1.5f);
 			canDash = true;
 			canUpDash = true;
 			canDoubleJump = true;
@@ -296,9 +305,10 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	private bool IsGrounded()
+	public bool IsGrounded()
 	{
-		return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+		isGroundedVar = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+		return isGroundedVar;
 	}
 
 	private bool IsOnWall()
@@ -335,28 +345,30 @@ public class PlayerMovement : MonoBehaviour
 	}
 	private IEnumerator UpDash()
 	{
-		canUpDashCode = false;
-		isUpDashing = true;
-		float originalTRWidth = dashTrail.startWidth;
-		float originalGravity = playerRB.gravityScale;
-		playerRB.gravityScale = 0f;
-		float dir = transform.localScale.x;
-		playerRB.velocity = new Vector2(0f, transform.localScale.y * upDashingPower);
-		dashTrail.startWidth = 0.78f;
-		yield return new WaitForSeconds(upDashingTime);
-		dashTrail.startWidth = originalTRWidth;
-		playerRB.gravityScale = originalGravity;
-		isUpDashing = false;
-		if (IsGrounded() && !isUpDashing)
-		{
-			yield return new WaitForSeconds(upDashingCooldown);
-			canUpDashCode = true;
+		if(!isGliding){
+			canUpDashCode = false;
+			isUpDashing = true;
+			float originalTRWidth = dashTrail.startWidth;
+			float originalGravity = playerRB.gravityScale;
+			playerRB.gravityScale = 0f;
+			float dir = transform.localScale.x;
+			playerRB.velocity = new Vector2(0f, transform.localScale.y * upDashingPower);
+			dashTrail.startWidth = 0.78f;
+			yield return new WaitForSeconds(upDashingTime);
+			dashTrail.startWidth = originalTRWidth;
+			playerRB.gravityScale = originalGravity;
+			isUpDashing = false;
+			if (IsGrounded() && !isUpDashing)
+			{
+				yield return new WaitForSeconds(upDashingCooldown);
+				canUpDashCode = true;
+			}
 		}
 	}
 
 	private void Glide()
 	{
-		if (!IsGrounded() && Input.GetKey(KeyCode.LeftShift) && canGlide && !isGliding)
+		if (!IsGrounded() && Input.GetKey(KeyCode.LeftShift) && canGlideCode && !isGliding && !isUpDashing)
 		{
 			isGliding = true;
 			playerRB.drag = glideDrag;
