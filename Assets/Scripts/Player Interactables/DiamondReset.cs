@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DiamondReset : MonoBehaviour
 {
+	public float coolDownTimer = 2f;
     private PlayerMovement playerMovement;
     private Collider2D diamondColl;
 	private SpriteRenderer diamondSprite;
@@ -22,7 +23,7 @@ public class DiamondReset : MonoBehaviour
 		diamondColl.enabled = false;
 		diamondSprite.enabled = false;
         resetJumps();
-		yield return new WaitForSecondsRealtime(1f);
+		yield return new WaitForSecondsRealtime(coolDownTimer);
 		diamondColl.enabled = true;
 		diamondSprite.enabled = true;
 	}
@@ -31,7 +32,7 @@ public class DiamondReset : MonoBehaviour
     {
         playerMovement.doubleJumpCount = playerMovement.maxDoubleJumps + 1;
         playerMovement.canDashCode = true;
-		//playerMovement.canUpDashCode = true;
+		playerMovement.upDashCount = playerMovement.originalUpDashCount;
 
     }
 
