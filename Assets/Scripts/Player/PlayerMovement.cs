@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
     private float upDashingCooldown = 0.5f;
 	[HideInInspector] public int originalUpDashCount;
     [HideInInspector] public bool wasUpDashing = false;  //? These will hold the dash values in last 2 frames
-    [Header("Dashing Animation (Echo effect)")]
     private float timeBtwSpawns;
     public float startTimeBtwSpawns;
     public GameObject echo;
@@ -70,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
     public float linearDrag = 0f;
     [HideInInspector] public bool isGliding = false;
     public float glideDrag = 10f;
+
+    [Header("Grappling Gun")]
+    public bool canGrapple = true;
+    public GameObject grapplingChildObj;
 
     private bool isFacingRight = true;
     private float horizontal;
@@ -99,10 +102,10 @@ public class PlayerMovement : MonoBehaviour
         
         else if(!wasDashing && !wasUpDashing) dashTrail.enabled = true;
 
-        if (isDashing == true)
-        {
-            return; // Prevents player from moving while dashing
-        }
+        if (isDashing == true) return;
+
+        if(!canGrapple) grapplingChildObj.SetActive(false);
+        if(canGrapple)  grapplingChildObj.SetActive(true) ;
 
         if (IsGrounded())
         {
@@ -310,6 +313,7 @@ public class PlayerMovement : MonoBehaviour
             isFacingRight = !isFacingRight;
             localScale.x *= -1f;
             transform.localScale = localScale;
+            grapplingChildObj.transform.localScale = localScale;
         }
     }
 
