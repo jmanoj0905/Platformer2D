@@ -13,6 +13,11 @@ public class BouncePlatform : MonoBehaviour
             {
                 // Apply immediate jump force upwards
                 playerRb.velocity = new Vector2(playerRb.velocity.x, jumpBoostVal);
+                
+                if(Input.GetKey(KeyCode.Space) || Input.GetKeyDown(KeyCode.Space))
+                {
+                    playerRb.velocity = new Vector2(playerRb.velocity.x, jumpBoostVal*1.5f);
+                }
             }
         }
     }

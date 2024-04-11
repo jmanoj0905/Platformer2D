@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class WindGlide : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     private PlayerMovement playerController;
     private Rigidbody2D playerRB;
     public float windForce = 3f;
 
     void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         playerRB = player.GetComponent<Rigidbody2D>();
         playerController = player.GetOrAddComponent<PlayerMovement>();
     }

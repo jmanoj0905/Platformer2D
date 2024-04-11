@@ -6,6 +6,8 @@ public class phaseShiftWall : MonoBehaviour
 {
 
     private PlayerMovement playerMovement;
+    public bool isDashBreakable = false;
+    public bool isUpDashBreakable = false;
     public float wallReformingTime = 10f;
     public Collider2D dashDisableColl;
 
@@ -19,7 +21,10 @@ public class phaseShiftWall : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            if(playerMovement.wasDashing == true || playerMovement.isDashing == true){
+            if((playerMovement.wasDashing == true || playerMovement.isDashing == true) && isDashBreakable){
+                StartCoroutine(destroyWall());
+            }
+            if((playerMovement.wasUpDashing == true || playerMovement.isUpDashing == true) && isUpDashBreakable){
                 StartCoroutine(destroyWall());
             }
         }

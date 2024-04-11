@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumps")]
     public float jumpingPower = 20f;
-    public float jumpBufferTime = 0.2f;
-    private float coyoteTime = 1f;
+    private float jumpBufferTime = 0.2f;
+    public float coyoteTime = 1f;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
     private bool isJumping;
@@ -139,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-        if (Input.GetKey(KeyCode.C) && canUpDashCode && !isGliding && upDashCount > 0)
+        if (Input.GetKey(KeyCode.E) && canUpDashCode && !isGliding && upDashCount > 0)
         {
             StartCoroutine(UpDash());
         }
@@ -239,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
                 canDoubleJump = false;
             }
         }
-        if ((Input.GetKeyUp(KeyCode.S) || !Input.GetKey(KeyCode.S)) && !IsTouchingRoof())
+        if (Input.GetKeyUp(KeyCode.S) && !IsTouchingRoof())
         {
             isCrouching = false;
             speed = originalSpeed;

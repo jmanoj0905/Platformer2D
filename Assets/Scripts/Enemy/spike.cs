@@ -23,8 +23,6 @@ public class Spike : MonoBehaviour
 
         // Move player to spawn point
         player.transform.position = spawnPoint.transform.position;
-
-        // Wait for a short delay
         yield return new WaitForSeconds(0.2f);
 
         // Enable player's sprite renderer and movement script

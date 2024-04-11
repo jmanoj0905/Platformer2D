@@ -191,3 +191,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallReformingTime: 10
   dashDisableColl: {fileID: 4438097694190558019}
+  isDashBreakable: 1
+  isUpDashBreakable: 0
