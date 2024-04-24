@@ -8,6 +8,7 @@ public class WindGlide : MonoBehaviour
     private GameObject player;
     private PlayerMovement playerController;
     private Rigidbody2D playerRB;
+
     public float windForce = 3f;
 
     void Awake()

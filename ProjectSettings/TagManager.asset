@@ -9,6 +9,7 @@ TagManager:
   - SouthPole
   - Upwind
   - NorthPole
+  - windTrail
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - SouthPole
   - NorthPole
   - 
-  - 
+  - UpWind
   - 
   - 
   - 

@@ -134,12 +134,12 @@ public class PlayerMovement : MonoBehaviour
             Crouch();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && canDashCode)
+        if ((Input.GetKeyDown(KeyCode.LeftControl) || (Input.GetKeyDown(KeyCode.RightControl))) && canDashCode)
         {
             StartCoroutine(Dash());
         }
 
-        if (Input.GetKey(KeyCode.E) && canUpDashCode && !isGliding && upDashCount > 0)
+        if ((Input.GetKey(KeyCode.E)||(Input.GetKey(KeyCode.Return))) && canUpDashCode && !isGliding && upDashCount > 0)
         {
             StartCoroutine(UpDash());
         }
@@ -178,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpBufferCounter = jumpBufferTime;
         }
@@ -196,14 +196,14 @@ public class PlayerMovement : MonoBehaviour
                 doubleJumpCount++;
             }
         }
-        else if (Input.GetButtonDown("Jump") && doubleJumpCount > 0)
+        else if ((Input.GetButtonDown("Jump")|| Input.GetKeyDown(KeyCode.UpArrow)) && doubleJumpCount > 0)
         {
             Jump();
             StartCoroutine(JumpCooldown());
             doubleJumpCount--;
         }
 
-        if (Input.GetButtonUp("Jump") && playerRB.velocity.y > 0f)
+        if ((Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.UpArrow)) && playerRB.velocity.y > 0f)
         {
             SoftLand();
             coyoteTimeCounter = 0f;
@@ -227,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Crouch()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.DownArrow))
         {
             if (canCrouch && IsGrounded())
             {
@@ -239,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
                 canDoubleJump = false;
             }
         }
-        if (Input.GetKeyUp(KeyCode.S) && !IsTouchingRoof())
+        if (Input.GetKeyUp(KeyCode.S)||Input.GetKeyUp(KeyCode.DownArrow) && !IsTouchingRoof())
         {
             isCrouching = false;
             speed = originalSpeed;
@@ -279,13 +279,13 @@ public class PlayerMovement : MonoBehaviour
             wallJumpCounter -= Time.deltaTime; //You can jump even after turning away from the wall
         }
 
-        if (Input.GetButtonDown("Jump") && wallJumpCounter > 0f)
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow)) && wallJumpCounter > 0f)
         {
             isWallJumping = true;
             playerRB.velocity = new Vector2(wallJumpDir * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpCounter = 0f;
-            canDash = true;
-            canDashCode = true;
+            //canDash = true;
+            //canDashCode = true;
             doubleJumpCount = maxDoubleJumps;
 
             if (transform.localScale.x != wallJumpDir)
@@ -409,12 +409,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Glide()
     {
-        if (!IsGrounded() && Input.GetKey(KeyCode.LeftShift) && canGlideCode && !isGliding && !isUpDashing)
+        if (!IsGrounded() && (Input.GetKey(KeyCode.LeftShift)||Input.GetKey(KeyCode.RightShift)) && canGlideCode && !isGliding && !isUpDashing)
         {
             isGliding = true;
             playerRB.drag = glideDrag;
         }
-        if (IsGrounded() || Input.GetKeyUp(KeyCode.LeftShift))
+        if (IsGrounded() || Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
         {
             isGliding = false;
             playerRB.drag = linearDrag;
