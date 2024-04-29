@@ -70,10 +70,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool isGliding = false;
     public float glideDrag = 10f;
 
-    [Header("Grappling Gun")]
-    public bool canGrapple = true;
-    public GameObject grapplingChildObj;
-
     private bool isFacingRight = true;
     private float horizontal;
     private float originalSpeed;
@@ -103,9 +99,6 @@ public class PlayerMovement : MonoBehaviour
         else if(!wasDashing && !wasUpDashing) dashTrail.enabled = true;
 
         if (isDashing == true) return;
-
-        if(!canGrapple) grapplingChildObj.SetActive(false);
-        if(canGrapple)  grapplingChildObj.SetActive(true) ;
 
         if (IsGrounded())
         {
@@ -313,7 +306,6 @@ public class PlayerMovement : MonoBehaviour
             isFacingRight = !isFacingRight;
             localScale.x *= -1f;
             transform.localScale = localScale;
-            grapplingChildObj.transform.localScale = localScale;
         }
     }
 

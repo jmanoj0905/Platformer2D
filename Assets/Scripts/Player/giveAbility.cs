@@ -11,14 +11,17 @@ public class giveAbility : MonoBehaviour
     public bool giveDash;
     public bool giveUpDash;
     public bool giveGlide;
-    public bool giveGrapple;
-
-    void Start ()
-    {
-        playerMovement = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovement> ();
+    //public bool giveGrapple;
+    private BoxCollider2D trigger;
+    void Start(){
+        trigger = gameObject.GetComponent<BoxCollider2D>();
+        trigger.enabled = true;
     }
+
     public void GivePlayerAbility()
     {
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        if(playerMovement == null) Debug.Log("player movement not there !");
         playerMovement.canDoubleJump = giveDoubleJump;
         playerMovement.maxDoubleJumps = noOfDoubleJumps;
 
@@ -26,7 +29,7 @@ public class giveAbility : MonoBehaviour
         playerMovement.canDash = giveDash;
         playerMovement.canUpDash = giveUpDash;
         playerMovement.canGlide = giveGlide;
-        playerMovement.canGrapple = giveGrapple;
+        trigger.enabled = false;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
