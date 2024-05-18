@@ -12,13 +12,16 @@ public class gameController : MonoBehaviour
     private TrailRenderer playerTrail;
 
     private void Start(){
+        playerScale = transform.localScale;
+        Debug.Log(playerScale);
         checkpointPos = transform.position;
         playerRb = GetComponent<Rigidbody2D>();
         playerTrail = GetComponent<TrailRenderer>();
     }
     private void OnTriggerEnter2D(Collider2D collision){
         if(collision.CompareTag("spike")){
-            playerScale = transform.localScale;
+            //playerScale = transform.localScale;
+            //Debug.Log(playerScale);
             Die();
         }
     }
@@ -26,6 +29,7 @@ public class gameController : MonoBehaviour
         StartCoroutine(Respawn(respawnTime));
     }
     public void UpdateCheckpoint(Vector2 pos){
+        Debug.Log("Checkpoint saved!");
         checkpointPos = pos;
     }
     private IEnumerator Respawn(float duration){
