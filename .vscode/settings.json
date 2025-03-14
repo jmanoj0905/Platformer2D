@@ -56,7 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Platformer2D.sln",
+    "dotnet.defaultSolution": "Play to Loose 2D platformer.sln",
     "grammarly.selectors": [
         {
             "language": "csharp",

@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool isGliding = false;
     public float glideDrag = 10f;
 
-    private bool isFacingRight = true;
+    [HideInInspector]public bool isFacingRight = true;
     private float horizontal;
     private float originalSpeed;
     private bool isGroundedVar = true;
