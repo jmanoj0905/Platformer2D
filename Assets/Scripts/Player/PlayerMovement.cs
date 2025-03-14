@@ -333,8 +333,9 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         float originalTRWidth = dashTrail.startWidth;
         float originalGravity = playerRB.gravityScale;
+        float dashDirection = isFacingRight ? 1f : -1f; 
         playerRB.gravityScale = 0f;
-        playerRB.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        playerRB.velocity = new Vector2(dashDirection * dashingPower, 0f);
         dashTrail.startWidth = 0.78f;
         yield return new WaitForSeconds(dashingTime);
         dashTrail.startWidth = originalTRWidth;

@@ -1,46 +1,57 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Callbacks;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public class gameController : MonoBehaviour
+public class GameController : MonoBehaviour
 {
-    private Vector2 checkpointPos;
-    public float respawnTime = .2f;
+    public Vector2 spawnPoint; // Hardcoded spawn point
+    public float respawnTime = 0.2f;
     private Rigidbody2D playerRb;
     private Vector3 playerScale;
     private TrailRenderer playerTrail;
+    private bool isFacingRight = true;
 
-    private void Start(){
+    private void Start()
+    {
         playerScale = transform.localScale;
-        Debug.Log(playerScale);
-        checkpointPos = transform.position;
         playerRb = GetComponent<Rigidbody2D>();
-        playerTrail = GetComponent<TrailRenderer>();
+        spawnPoint = transform.position; // Set initial spawn point
     }
-    private void OnTriggerEnter2D(Collider2D collision){
-        if(collision.CompareTag("spike")){
-            //playerScale = transform.localScale;
-            //Debug.Log(playerScale);
+
+    private void Update()
+    {
+        if(playerRb.velocity.x > 0){
+            isFacingRight = true;
+        }
+        else{
+            isFacingRight = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("spike"))
+        {
             Die();
         }
     }
-    public void Die(){
+
+    public void Die()
+    {
         StartCoroutine(Respawn(respawnTime));
     }
-    public void UpdateCheckpoint(Vector2 pos){
-        Debug.Log("Checkpoint saved!");
-        checkpointPos = pos;
-    }
-    private IEnumerator Respawn(float duration){
+
+    private IEnumerator Respawn(float duration)
+    {
         playerRb.simulated = false;
-        playerTrail.enabled = false;
-        transform.localScale = new Vector3(0,0,0);
-        playerRb.velocity = new Vector2(0,0);
+        if (playerTrail != null) playerTrail.enabled = false;
+        transform.localScale = Vector3.zero;
+        playerRb.velocity = Vector2.zero;
         yield return new WaitForSeconds(duration);
-        transform.position = checkpointPos;
+        transform.position = spawnPoint;
         transform.localScale = playerScale;
-        playerTrail.enabled = true;
+        transform.localScale = new Vector3(isFacingRight ? Mathf.Abs(playerScale.x) : -Mathf.Abs(playerScale.x), playerScale.y, playerScale.z);
+        if (playerTrail != null) playerTrail.enabled = true;
         playerRb.simulated = true;
     }
 }
