@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool wasUpDashing = false;  //? These will hold the dash values in last 2 frames
     private float timeBtwSpawns;
     public float startTimeBtwSpawns;
-    public GameObject echo;
+    //public GameObject echo;
 
     [Header("Gliding")]
     public bool canGlide = true;
@@ -78,40 +78,41 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         originalSpeed = speed;
-		originalUpDashCount = upDashCount;
+        originalUpDashCount = upDashCount;
     }
 
     public void Update()
     {
-        if(isDashing || isUpDashing){
-            dashTrail.enabled = false;
-            if(timeBtwSpawns <= 0){
-                //spawn echo
-                GameObject instance = (GameObject)Instantiate(echo, transform.position, Quaternion.identity);
-                Destroy(instance, 1.5f);
-                timeBtwSpawns = startTimeBtwSpawns;
-            }
-            else{
-                timeBtwSpawns -= Time.deltaTime;
-            }
-        }
+        FaceCorrectDirection();
+        // Trail renderer should always be on when moving
+        dashTrail.enabled = true;
         
-        else if(!wasDashing && !wasUpDashing) dashTrail.enabled = true;
-
+        // Handle echo effect during dashing separately
+        //if(isDashing || isUpDashing) {
+            //if(timeBtwSpawns <= 0) {
+                // Spawn echo effect
+                //GameObject instance = (GameObject)Instantiate(echo, transform.position, Quaternion.identity);
+                //Destroy(instance, 1.5f);
+                //timeBtwSpawns = startTimeBtwSpawns;
+            //}
+           //else {
+                //timeBtwSpawns -= Time.deltaTime;
+            //}
+        //}
+        
         if (isDashing == true) return;
 
+        // Rest of your existing Update code remains unchanged
         if (IsGrounded())
         {
             if (!isDashing) canDashCode = canDash;
-
             if (!isUpDashing) canUpDashCode = canUpDash;
-
             if (!isGliding) canGlideCode = canGlide;
-
             isGliding = false;
-
-			upDashCount = originalUpDashCount;
+            upDashCount = originalUpDashCount;
         }
+        
+        // Your existing methods remain unchanged
         HandleJumping();
         WallSlide();
         UpdateDashVariables();
@@ -122,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isWallJumping)
         {
-            Flip();
+            //Flip();
             HandleHorizontalMovement();
             Crouch();
         }
@@ -292,13 +293,25 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(StopWallJumping), wallJumpDuration);
         }
     }
+    void FaceCorrectDirection()
+    {
+        float scaleX = transform.localScale.x;
+
+        if ((isFacingRight && scaleX < 0) || (!isFacingRight && scaleX > 0))
+        {
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+
 
     private void StopWallJumping()
     {
         isWallJumping = false;
     }
 
-    private void Flip()
+    public void Flip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {

@@ -1,38 +1,53 @@
 using System.Collections;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class gameController : MonoBehaviour
 {
-    public Vector2 spawnPoint; // Hardcoded spawn point
+    private Vector2 checkpointPos;
     public float respawnTime = 0.2f;
     private Rigidbody2D playerRb;
     private Vector3 playerScale;
     private TrailRenderer playerTrail;
-    private bool isFacingRight = true;
+    public PlayerMovement playerMovement;
+    private bool facingRightBeforeRespawn;
+
+    public GameObject playerVisuals; // 🎯 Drag & drop Player sprite/model here
 
     private void Start()
     {
         playerScale = transform.localScale;
+        checkpointPos = transform.position;
+
         playerRb = GetComponent<Rigidbody2D>();
-        spawnPoint = transform.position; // Set initial spawn point
+        playerTrail = GetComponent<TrailRenderer>();
+
+        if (playerMovement == null)
+        {
+            playerMovement = GetComponent<PlayerMovement>();
+        }
+
+        if (playerRb == null || playerTrail == null || playerMovement == null)
+        {
+            Debug.LogError("One or more required components are missing from Player.");
+        }
+
+        if (playerVisuals == null)
+        {
+            Debug.LogError("Player visuals (sprite/model) are not assigned!");
+        }
     }
 
     private void Update()
     {
-        if(playerRb.velocity.x > 0){
-            isFacingRight = true;
-        }
-        else{
-            isFacingRight = false;
-        }
-    }
+        if (playerRb == null || playerMovement == null) return;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("spike"))
+        if (playerRb.velocity.x > 0 && !playerMovement.isFacingRight)
         {
-            Die();
+            playerMovement.isFacingRight = true;
+        }
+        else if (playerRb.velocity.x < 0 && playerMovement.isFacingRight)
+        {
+            playerMovement.isFacingRight = false;
         }
     }
 
@@ -41,17 +56,43 @@ public class GameController : MonoBehaviour
         StartCoroutine(Respawn(respawnTime));
     }
 
+    public void UpdateCheckpoint(Vector2 pos)
+    {
+        Debug.Log("Checkpoint saved at: " + pos);
+        checkpointPos = pos;
+    }
+
     private IEnumerator Respawn(float duration)
     {
         playerRb.simulated = false;
-        if (playerTrail != null) playerTrail.enabled = false;
-        transform.localScale = Vector3.zero;
+        playerTrail.enabled = false;
+        
+        if (playerVisuals != null) playerVisuals.SetActive(false); // ❌ Hide visuals instead
+
         playerRb.velocity = Vector2.zero;
+        facingRightBeforeRespawn = playerMovement.isFacingRight;
+
         yield return new WaitForSeconds(duration);
-        transform.position = spawnPoint;
-        transform.localScale = playerScale;
-        transform.localScale = new Vector3(isFacingRight ? Mathf.Abs(playerScale.x) : -Mathf.Abs(playerScale.x), playerScale.y, playerScale.z);
-        if (playerTrail != null) playerTrail.enabled = true;
+
+        transform.position = checkpointPos;
+        
+        if (playerVisuals != null) playerVisuals.SetActive(true); // ✅ Show visuals again
+        playerTrail.enabled = true;
         playerRb.simulated = true;
+
+        if (playerMovement.isFacingRight != facingRightBeforeRespawn)
+        {
+            //Flip();
+        }
+
+        Debug.Log("Respawned at: " + checkpointPos);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("spike"))
+        {
+            Die();
+        }
     }
 }
